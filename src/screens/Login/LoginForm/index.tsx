@@ -30,7 +30,7 @@ export const LoginForm = () => {
                 name="password"
                 label="SENHA"
                 placeholder="Sua senha"
-                leftIconName={"email"}
+                leftIconName={"lock-outline"}
                 secureTextEntry
             />
         </>
