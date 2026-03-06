@@ -73,7 +73,7 @@ export const RegisterForm = () => {
             />
 
 
-            <View className="flex-1 justify-between mt-8 mb-6 min-h-[290px]">
+            <View className="flex-1 justify-between mt-8 mb-6 min-h-[200px]">
                 <AppButton iconName="arrow-forward" mode="fill" onPress={handleSubmit(onSubmit)}>
                     Cadastrar
                 </AppButton>
