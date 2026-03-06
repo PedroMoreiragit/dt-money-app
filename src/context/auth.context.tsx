@@ -3,6 +3,8 @@ import { FormRegisterParams } from "@/screens/Register/RegisterForm";
 import { createContext, FC, PropsWithChildren, useContext, useState } from "react";
 import * as authService from "@/shared/services/dt-money/auth.service";
 import { IUser } from "@/shared/interfaces/user-interface";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { IAuthenticateResponse } from "@/shared/interfaces/https/authenticate-response";
 
 type AuthContextType = {
     user: IUser | null;
@@ -10,6 +12,7 @@ type AuthContextType = {
     handleAuthenticate: (params: FormLoginParams) => Promise<void>;
     handleRegister: (params: FormRegisterParams) => Promise<void>;
     handleLogout: () => void;
+    restoreUserSession: () => Promise<string | null>;
 }
 
 export const AuthContext = createContext<AuthContextType>(
@@ -22,23 +25,34 @@ export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
 
 
     const handleAuthenticate = async (userData: FormLoginParams) => {
-    const response = await authService.authenticate(userData);
-    
-    const { token, user } = response || {};
+        const { token, user } = await authService.authenticate(userData);
 
-    setUser(user);
-    setToken(token);
-};
+        await AsyncStorage.setItem("dt-money-user", JSON.stringify({ user, token }));
+
+        setUser(user);
+        setToken(token);
+    };
 
 
     const handleRegister = async (formData: FormRegisterParams) => {
-        const {token, user}  = await authService.registerUser(formData);
+        const { token, user } = await authService.registerUser(formData);
+        await AsyncStorage.setItem("dt-money-user", JSON.stringify({ user, token }));
         setUser(user);
         setToken(token);
-     };
+    };
 
 
     const handleLogout = () => { }
+
+    const restoreUserSession = async () => {
+        const userData = await AsyncStorage.getItem("dt-money-user");
+        if(userData) {
+            const {token, user} = JSON.parse(userData) as IAuthenticateResponse;
+            setUser(user);
+            setToken(token);
+        }
+        return userData;
+    }
 
 
     return (
@@ -47,7 +61,8 @@ export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
             handleLogout,
             handleRegister,
             token,
-            user
+            user,
+            restoreUserSession,
 
         }}>{children}</AuthContext.Provider>
     )
