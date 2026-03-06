@@ -26,7 +26,7 @@ export const AppButton: FC<PropsWithChildren<AppButtonParams>> = ({
             iconName ? "justify-between" : "justify-center",
             {
                 "bg-accent-brand": isFill,
-                "bg-none border-[1px] border-s-accent-brand" : !isFill,
+                "bg-none border-[1px] border-accent-brand" : !isFill,
             }
         )}>
             <Text className={clsx("text-base", 
