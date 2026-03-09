@@ -9,7 +9,9 @@ export const PrivateRoutes = () => {
     const PrivateStack = createStackNavigator<PrivateStackParams>();
 
     return (
-        <PrivateStack.Navigator>
+        <PrivateStack.Navigator screenOptions={{
+            headerShown: false,
+        }}>
             <PrivateStack.Screen name="Home" component={Home}/>
         </PrivateStack.Navigator>
     )
