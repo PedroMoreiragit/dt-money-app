@@ -3,6 +3,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { useAuthContext } from "@/context/auth.context";
 import { colors } from "@/shared/colors";
 import { useBottomSheetContext } from "@/context/bottomSheet.context";
+import { NewTransaction } from "../NewTransaction";
 
 export const AppHeader = () => {
 
@@ -18,14 +19,13 @@ export const AppHeader = () => {
                 />
                 <TouchableOpacity className="flex-row items-center gap-2 mt-2" onPress={handleLogout}>
                     <MaterialIcons name="logout" color={colors.gray[700]} size={15} />
-                    <Text  className="text-gray-700 text-base">Sair da conta</Text>
+                    <Text className="text-gray-700 text-base">Sair da conta</Text>
                 </TouchableOpacity>
             </View>
 
             <TouchableOpacity
                 onPress={() => {
-                    openBottomSheet(<Text>Formulário da nova transação</Text>, 0
-                    )
+                    openBottomSheet(<NewTransaction />, 0)
                 }}
                 className="bg-accent-brand w-[130px] items-center justify-center rounded-xl h-[50px]">
                 <Text className="text-white font-bold text-sm">Nova transação</Text>
