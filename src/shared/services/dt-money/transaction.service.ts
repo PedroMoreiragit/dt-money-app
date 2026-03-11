@@ -1,4 +1,5 @@
 import { dtMoneyApi } from "@/shared/api/dt-money";
+import { CreateTransactionInterface } from "@/shared/interfaces/https/create-transactions-request";
 import { TransactionCategory } from "@/shared/interfaces/https/transaction-category-response";
 
 export const getTransactionCategories = async (): Promise<TransactionCategory[]> => {
@@ -7,3 +8,9 @@ export const getTransactionCategories = async (): Promise<TransactionCategory[]>
     );
     return data;
 };
+
+export const createTransaction = async (
+    transaction: CreateTransactionInterface
+) => {
+    await dtMoneyApi.post("/transaction", transaction)
+}
