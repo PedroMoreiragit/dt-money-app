@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
-import { TransactionTypes } from "@/shared/enums/transatction-types";
+import { TransactionTypes } from "@/shared/enums/transaction-types";
 import { MaterialIcons } from "@expo/vector-icons";
 import clsx from "clsx";
 import { colors } from "@/shared/colors";

@@ -17,6 +17,7 @@
     "axios": "^1.13.6",
     "babel-plugin-module-resolver": "^5.0.2",
     "clsx": "^2.1.1",
+    "date-fns": "^4.1.0",
     "expo": "~55.0.5",
     "expo-checkbox": "^55.0.3",
     "expo-status-bar": "~55.0.4",
