@@ -9,6 +9,7 @@ import { TransactionTypes } from "@/shared/enums/transaction-types";
 import clsx from "clsx";
 import { RightAction } from "./RightAction";
 import { LeftAction } from "./LeftAction";
+import { moneyMapper } from "@/shared/utils/money-mapper";
 
 interface Params {
     transaction: Transaction;
@@ -39,7 +40,7 @@ export const TransactionCard: FC<Params> = ({
                 <Text
                     className={clsx("text-2xl font-bold mt-2 ", isExpense ? "text-accent-red" : "text-accent-brand-light")}
                 >{transaction.type.id === TransactionTypes.EXPENSE && "-"}
-                    R$ {transaction.value.toFixed(2).replace(".", ",")}</Text>
+                    R$ {moneyMapper(transaction.value)}</Text>
                 <View className="flex-row w-full justify-between items-center">
                     <View className="items-center flex-row mt-3">
                         <MaterialIcons

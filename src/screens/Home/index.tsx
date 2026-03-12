@@ -6,11 +6,12 @@ import { useErrorHandler } from "@/shared/hooks/useErrorHandler";
 import { FlatList } from "react-native";
 import { ListHeader } from "./ListHeader";
 import { TransactionCard } from "./TransactionCard";
+import { RefreshControl } from "react-native-gesture-handler";
 
 
 export const Home = () => {
 
-    const { fetchCategories, fetchTransactions, transactions, categories } = useTransactionContext();
+    const { fetchCategories, fetchTransactions, transactions, refreshTransactions, loading } = useTransactionContext();
     const { handleError } = useErrorHandler();
 
 
@@ -21,12 +22,11 @@ export const Home = () => {
             handleError(error, "Falha ao buscar categorias");
         }
     }
-    console.log(categories);
 
     useEffect(() => {
         (async () => {
-            
-            await Promise.all([handleFetchCategories(), fetchTransactions()]);
+
+            await Promise.all([handleFetchCategories(), fetchTransactions({page: 1})]);
         })();
     }, []);
 
@@ -36,9 +36,13 @@ export const Home = () => {
             <FlatList
                 className="bg-background-secondary"
                 data={transactions}
-                keyExtractor={({id}) => `transaction-${id}`}
+                keyExtractor={({ id }) => `transaction-${id}`}
                 renderItem={({ item }) => <TransactionCard transaction={item} />}
                 ListHeaderComponent={ListHeader}
+                refreshControl={
+                    <RefreshControl
+                    refreshing={loading} onRefresh={refreshTransactions} />
+                }
             />
         </SafeAreaView>
     )
