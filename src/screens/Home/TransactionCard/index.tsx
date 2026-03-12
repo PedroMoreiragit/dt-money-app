@@ -30,7 +30,7 @@ export const TransactionCard: FC<Params> = ({
             marginBottom: 16,
         }}
             renderRightActions={() => <RightAction transactionId={transaction.id} />}
-            renderLeftActions={() => <LeftAction />}
+            renderLeftActions={() => <LeftAction transaction={transaction}/>}
             overshootRight={false}
             overshootLeft={false}
         >

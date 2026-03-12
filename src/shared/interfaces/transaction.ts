@@ -14,5 +14,5 @@ export interface Transaction {
     },
     "createdAt": string,
     "updatedAt": string,
-    "deletedAt": string
+    "deletedAt": string | null
 }

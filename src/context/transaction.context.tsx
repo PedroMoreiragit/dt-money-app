@@ -4,11 +4,13 @@ import * as transactionsService from '@/shared/services/dt-money/transaction.ser
 import { CreateTransactionInterface } from "@/shared/interfaces/https/create-transactions-request";
 import { Transaction } from "@/shared/interfaces/transaction";
 import { TotalTransactions } from "@/shared/interfaces/https/total-transactions";
+import { UpdateTransactionInterface } from "@/shared/interfaces/https/update-transactions-request";
 
 export type TransactionContextType = {
     fetchCategories: () => Promise<void>;
     categories: TransactionCategory[];
     createTransaction: (transaction: CreateTransactionInterface) => Promise<void>;
+    updateTransaction: (transaction: UpdateTransactionInterface) => Promise<void>;
     fetchTransactions: () => Promise<void>;
     totalTransactions: TotalTransactions;
     transactions: Transaction[];
@@ -37,6 +39,10 @@ export const TransactionContextProvider: FC<PropsWithChildren> = ({
         await transactionsService.createTransaction(transaction);
     };
 
+    const updateTransaction = async (transaction: UpdateTransactionInterface) => {
+        await transactionsService.updateTransaction(transaction);
+    };
+
     const fetchTransactions = useCallback(async () => {
         const transactionResponse = await transactionsService.getTransactions({
             page: 1,
@@ -54,6 +60,7 @@ export const TransactionContextProvider: FC<PropsWithChildren> = ({
                 fetchCategories,
                 createTransaction,
                 fetchTransactions,
+                updateTransaction,
                 totalTransactions,
                 transactions,
             }}
