@@ -20,7 +20,7 @@ export const TransactionContextProvider: FC<PropsWithChildren> = ({
     children
 }) => {
     const [categories, setCategories] = useState<TransactionCategory[]>([]);
-    const [transactions, setTransactions ] = useState<Transaction[]>([]);
+    const [transactions, setTransactions] = useState<Transaction[]>([]);
     const [totalTransactions, setTotalTransactions] = useState<TotalTransactions>({
         expense: 0,
         revenue: 0,
@@ -29,6 +29,7 @@ export const TransactionContextProvider: FC<PropsWithChildren> = ({
 
     const fetchCategories = async () => {
         const categoriesResponse = await transactionsService.getTransactionCategories();
+        setCategories(categoriesResponse);
     };
 
     const createTransaction = async (transaction: CreateTransactionInterface) => {
