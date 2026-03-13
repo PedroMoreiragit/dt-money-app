@@ -3,11 +3,14 @@ import { useTransactionContext } from "@/context/transaction.context"
 import { MaterialIcons } from "@expo/vector-icons";
 import { colors } from "@/shared/colors";
 import { useEffect, useState } from "react";
+import { useBottomSheetContext } from "@/context/bottomSheet.context";
+import { TransactionsFilters } from "./TransactionsFilters";
 
 
 export const FilterInput = () => {
 
     const { pagination, setSearchText, searchText, fetchTransactions } = useTransactionContext();
+    const { openBottomSheet } = useBottomSheetContext();
 
     const [text, setText] = useState("");
 
@@ -18,15 +21,15 @@ export const FilterInput = () => {
         return () => clearTimeout(handler)
     }, [text]);
 
-   useEffect(() => {
-    (async () => {
-        try {
-            await fetchTransactions({ page: 1 })
-        } catch (error) {
-            console.error("Erro ao buscar transações:", error);
-        }
-    })()
-}, [searchText, fetchTransactions])
+    useEffect(() => {
+        (async () => {
+            try {
+                await fetchTransactions({ page: 1 })
+            } catch (error) {
+                console.error("Erro ao buscar transações:", error);
+            }
+        })()
+    }, [searchText, fetchTransactions])
 
     return (
         <View className="mb-4 w-[90%] self-center">
@@ -49,7 +52,7 @@ export const FilterInput = () => {
                     placeholder="Busque uma transação"
                 />
 
-                <TouchableOpacity className="ml-2">
+                <TouchableOpacity className="ml-2" onPress={() => openBottomSheet(<TransactionsFilters/>, 1)}>
                     <MaterialIcons
                         name="filter-list"
                         color={colors["accent-brand-light"]}

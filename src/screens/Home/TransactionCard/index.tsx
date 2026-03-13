@@ -38,7 +38,7 @@ export const TransactionCard: FC<Params> = ({
             <View className="h-[140] bg-background-tertiary rounded-[6] p-6">
                 <Text className="text-white text-base">{transaction.description}</Text>
                 <Text
-                    className={clsx("text-2xl font-bold mt-2 ", isExpense ? "text-accent-red" : "text-accent-brand-light")}
+                    className={clsx("text-xl font-bold mt-2 ", isExpense ? "text-accent-red" : "text-accent-brand-light")}
                 >{transaction.type.id === TransactionTypes.EXPENSE && "-"}
                     R$ {moneyMapper(transaction.value)}</Text>
                 <View className="flex-row w-full justify-between items-center">
