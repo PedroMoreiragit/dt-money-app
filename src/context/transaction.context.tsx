@@ -32,6 +32,9 @@ export type TransactionContextType = {
     loadMoreTransactions: () => Promise<void>;
     loadings: Loadings;
     handleLoadings: (params: HandleLoadingParams) => void;
+    pagination: Pagination;
+    setSearchText: (text:string) => void;
+    searchText: string;
 }
 
 export const TransactionContext = createContext({} as TransactionContextType);
@@ -41,6 +44,7 @@ export const TransactionContextProvider: FC<PropsWithChildren> = ({
 }) => {
     const [categories, setCategories] = useState<TransactionCategory[]>([]);
     const [transactions, setTransactions] = useState<Transaction[]>([]);
+    const [searchText, setSearchText] = useState("");
     const [loadings, setLoadings] = useState<Loadings>({
         initial: false,
         refresh: false,
@@ -100,7 +104,8 @@ export const TransactionContextProvider: FC<PropsWithChildren> = ({
         
         const transactionResponse = await transactionsService.getTransactions({
             page,
-            perPage: pagination.perPage
+            perPage: pagination.perPage,
+            searchText,
         });
 
         if (page === 1) {
@@ -118,7 +123,7 @@ export const TransactionContextProvider: FC<PropsWithChildren> = ({
             totalRows: transactionResponse.totalRows,
             totalPages: transactionResponse.totalPages,
         })
-    }, [pagination]);
+    }, [pagination, searchText]);
 
     const loadMoreTransactions = useCallback(async () => {
         if (loadings.loadMore || pagination.page >= pagination.totalPages) return;
@@ -137,8 +142,11 @@ export const TransactionContextProvider: FC<PropsWithChildren> = ({
                 loadMoreTransactions,
                 totalTransactions,
                 transactions,
+                pagination,
                 handleLoadings,
                 loadings,
+                setSearchText,
+                searchText,
             }}
         >
             {children}

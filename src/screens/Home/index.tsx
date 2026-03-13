@@ -118,9 +118,9 @@ export const Home = () => {
                 }
                 onEndReached={hnadleLoadMoreTransactions}
                 onEndReachedThreshold={0.5}
-                ListEmptyComponent={loadings.initial ? null :  EmptyList}
+                ListEmptyComponent={loadings.initial ? null : () => <EmptyList />}
                 ListFooterComponent={loadings.loadMore ? (
-                    <ActivityIndicator color={colors.["accent-brand-light"]} 
+                    <ActivityIndicator color={colors["accent-brand-light"]} 
                     size={"large"}
                     />
                 ): null}

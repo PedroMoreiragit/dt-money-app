@@ -1,9 +1,11 @@
-import { Text } from "react-native"
+import { View, Text } from "react-native";
 
 export const EmptyList = () => {
     return (
-        <Text className="text-gray-600 text-lg mt-4 text-center ">
-            Nenhuma Trnasação encontrada
-        </Text>
+        <View className="flex-1 justify-center items-center">
+            <Text className="text-gray-600 text-lg text-center">
+                Nenhuma Transação encontrada
+            </Text>
+        </View>
     )
 }
